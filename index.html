@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment method</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="selection">
+      <h3>Choode your payment method</h3>
+      <form id="methods" method="post">
+        <div class="method-card">
+          <img class="bank-img" src="./img/visa.png" alt="bank preview">
+          <div class="card-format">
+            <p class="format">XXXX XXXX XXXX 8908</p>
+            <div>
+              <p class="card-date">09/27</p>
+              <p class="default">Default</p>
+            </div>
+          </div>
+          <input checked type="radio" class="bank">
+        </div>
+        <div class="method-card">
+          <img class="bank-img" src="./img/mastercard.png" alt="bank preview">
+          <div class="card-format">
+            <p class="format">XXXX XXXX XXXX 7777</p>
+            <div>
+              <p class="card-expiration">01/24</p>
+              <p class="default"></p>
+            </div>
+          </div>
+          <input type="radio" class="bank">
+        </div>
+        <div class="method-card">
+          <img class="bank-img" src="./img/payPal.png" alt="bank preview">
+          <div class="card-format">
+            <p class="format">XXXX XXXX XXXX 6498</p>
+            <div>
+              <p class="card-expiration">12/23</p>
+              <p class="default"></p>
+            </div>
+          </div>
+          <input type="radio" class="bank">
+        </div>
+        <button id="payment-method-btn" class="submit" type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <div class="card-preview">
+        <div class="card-img">
+          <img src="./img/card.png" alt="bank card with your info">
+          <div class="card-preview-info">
+            <div>
+              <p class="holder-name">Pascal Benoit</p>
+              <p class="card-expiration">09 / 25</p>
+            </div>
+            <p class="card-number">0000 0000 0000 1600</p>
+            <img src="./img/visa.png" alt="Bank preview">
+          </div>
+        </div>
+      </div>
+      <div class="card-form">
+        <form id="card-info" method="post">
+          <div class="input-layout">
+            <label for="name">Name</label>
+            <input id="name" type="text">
+          </div>
+          <div class="input-layout">
+            <label for="expiration">Expiration</label>
+            <input id="expiration" type="text" maxlength="7">
+          </div>
+          <div class="input-layout">
+            <label for="card-number">Card Number</label>
+            <input id="card-number" type="text" maxlength="19">
+          </div>
+          <div class="input-layout">
+            <label for="cvv">CVV</label>
+            <input id="cvv" type="password" maxlength="3">
+          </div>
+        </form>
+        <div class="card-btns">
+          <button class="cancel" type="button">Cancel</button>
+          <button id="card-preview-btn" class="submit" type="submit">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
