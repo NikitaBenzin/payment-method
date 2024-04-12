@@ -13,7 +13,7 @@
     <div class="selection">
       <h3>Choose your payment method</h3>
       <ul id="methods">
-        <li class="method-card checked">
+        <li bank="visa" class="method-card checked">
           <img class="bank-img" src="./img/visa.png" alt="bank preview">
           <div class="card-format">
             <p class="format">XXXX XXXX XXXX 8908</p>
@@ -22,9 +22,9 @@
               <p class="default">Default</p>
             </div>
           </div>
-          <input value="visa" checked type="radio" class="bank checked">
+          <div class="radio"></div>
         </li>
-        <li class="method-card">
+        <li bank="mastercard" class="method-card">
           <img class="bank-img" src="./img/mastercard.png" alt="bank preview">
           <div class="card-format">
             <p class="format">XXXX XXXX XXXX 7777</p>
@@ -33,9 +33,9 @@
               <p class="default"></p>
             </div>
           </div>
-          <input value="mastercard" type="radio" class="bank">
+          <div class="radio"></div>
         </li>
-        <li class="method-card">
+        <li bank="paypal" class="method-card">
           <img class="bank-img" src="./img/payPal.png" alt="bank preview">
           <div class="card-format">
             <p class="format">XXXX XXXX XXXX 6498</p>
@@ -44,9 +44,9 @@
               <p class="default"></p>
             </div>
           </div>
-          <input value="paypal" type="radio" class="bank">
+          <div class="radio"></div>
         </li>
-        <li class="method-card">
+        <li bank="add" class="method-card">
           <img class="bank-img" src="./img/card.png" alt="bank preview">
           <p>Add Payment Method</p>
         </li>
@@ -58,7 +58,7 @@
       <div class="card-preview">
         <div class="card-img">
           <img src="./img/card.png" alt="bank card with your info">
-          <div class="card-preview-info">
+          <div id="card-preview-info">
             <div>
               <div class="numbers">
                 <p class="holder-name">Pascal Beloit</p>
@@ -74,7 +74,7 @@
         <form id="card-info" method="post">
           <div class="input-layout">
             <label for="name">Name</label>
-            <input id="name" type="text">
+            <input value="Pascal" id="name" type="text">
           </div>
           <div class="input-layout">
             <label for="expiration">Expiration</label>
@@ -91,7 +91,7 @@
         </form>
         <div class="card-btns">
           <button class="cancel" type="button">Cancel</button>
-          <button id="card-preview-btn" class="submit" type="submit">Submit</button>
+          <button id="change-btn" class="submit" type="submit">Submit</button>
         </div>
       </div>
     </div>
