@@ -13,39 +13,7 @@
     <div class="selection">
       <h3>Choose your payment method</h3>
       <ul id="methods">
-        <li bank="visa" class="method-card checked">
-          <img class="bank-img" src="./img/visa.png" alt="bank preview">
-          <div class="card-format">
-            <p class="format">XXXX XXXX XXXX 8908</p>
-            <div>
-              <p class="card-expiration">09/27</p>
-              <p class="default">Default</p>
-            </div>
-          </div>
-          <div class="radio"></div>
-        </li>
-        <li bank="mastercard" class="method-card">
-          <img class="bank-img" src="./img/mastercard.png" alt="bank preview">
-          <div class="card-format">
-            <p class="format">XXXX XXXX XXXX 7777</p>
-            <div>
-              <p class="card-expiration">01/24</p>
-              <p class="default"></p>
-            </div>
-          </div>
-          <div class="radio"></div>
-        </li>
-        <li bank="paypal" class="method-card">
-          <img class="bank-img" src="./img/payPal.png" alt="bank preview">
-          <div class="card-format">
-            <p class="format">XXXX XXXX XXXX 6498</p>
-            <div>
-              <p class="card-expiration">12/23</p>
-              <p class="default"></p>
-            </div>
-          </div>
-          <div class="radio"></div>
-        </li>
+
         <li bank="add" class="method-card">
           <img class="bank-img" src="./img/card.png" alt="bank preview">
           <p>Add Payment Method</p>
@@ -74,7 +42,7 @@
         <form id="card-info" method="post">
           <div class="input-layout">
             <label for="name">Name</label>
-            <input value="Pascal" id="name" type="text">
+            <input id="holderName" type="text">
           </div>
           <div class="input-layout">
             <label for="expiration">Expiration</label>
@@ -82,7 +50,7 @@
           </div>
           <div class="input-layout">
             <label for="card-number">Card Number</label>
-            <input id="card-number" type="text" maxlength="19">
+            <input id="cardNumber" type="text" maxlength="19">
           </div>
           <div class="input-layout">
             <label for="cvv">CVV</label>
@@ -90,14 +58,14 @@
           </div>
         </form>
         <div class="card-btns">
-          <button class="cancel" type="button">Cancel</button>
+          <button id="cancel-btn" class="cancel" type="button">Cancel</button>
           <button id="change-btn" class="submit" type="submit">Submit</button>
         </div>
       </div>
     </div>
   </div>
 
-  <script src="./js/index.js"></script>
+  <script type="module" src="./js/index.js"></script>
 </body>
 
 </html>

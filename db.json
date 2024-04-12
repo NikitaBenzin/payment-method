@@ -1,25 +1,30 @@
 { 
-
-  "visa":{
-    "bank": "visa",
-    "holderName": "Pascal Beloit",   
-    "expiration": "09 / 25",
-    "cardNumber": "4234 1234 1234 8908"
-  },
+  "cards": [
+    {
+      "bank": "visa",
+      "holderName": "Pascal Beloit",   
+      "expiration": "09 / 25",
+      "cardNumber": "4234123412348908",
+      "cvv": "021"
+    },
+    
+    {
+      "bank": "mastercard",
+      "holderName": "Pascal Beloit",   
+      "expiration": "02 / 26",
+      "cardNumber": "5234123412343456",
+      "cvv": "601"
+    },
   
-  "mastercard":{
-    "bank": "mastercard",
-    "holderName": "Pascal Beloit",   
-    "expiration": "09 / 25",
-    "cardNumber": "5234 1234 1234 8908"
-  },
+    
+    {
+      "bank": "paypal",
+      "holderName": "Pascal Beloit",   
+      "expiration": "09 / 05",
+      "cardNumber": "5334123412341935",
+      "cvv": "001"
+    }
 
-  
-  "paypal": {
-    "bank": "paypal",
-    "holderName": "Pascal Beloit",   
-    "expiration": "09 / 25",
-    "cardNumber": "5334 1234 1234 8908"
-  }
+  ]
   
 }

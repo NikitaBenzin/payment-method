@@ -14,10 +14,11 @@ x 2: change bank image
   mastercard: 5...
   paypal: 53...
 */
+import { addMethod, getAllData, getData } from './service.js'
 
 // VARIABLES
-// credtir cards and one add card
-const methodCards = document.querySelectorAll(".method-card")
+// credit cards and one add card
+const methodsContainer = document.querySelector("#methods")
 
 // card preview form cardForm[0].value
 const editInputs = document.querySelectorAll('#card-info input')
@@ -29,33 +30,63 @@ const cardNumber = document.querySelector('#card-preview-info .card-number')
 const cardBankImg = document.querySelector('#card-preview-info > img')
 
 // BUTTONS
-// кнопка для подтверждения выбраной карты3
+// кнопка для подтверждения выбранной карты
 const paymentMethodBtn = document.querySelector('#payment-method-btn')
 // кнопка для подтверждения изменения инфо карты
 const changeBtn = document.querySelector('#change-btn')
+const cancelBtn = document.querySelector('#cancel-btn')
 
 // ----------------------------------------------------------------------
 
 // FUNCTIONS
+loadCards()
 
-methodCards.forEach(card => {
-  card.addEventListener('click', (e) => {
-    if (!card.classList.contains('checked')) {
-      methodCards.forEach(item => {
-        item.classList.remove('checked')
-      })
+async function loadCards() {
+  const data = await getAllData()
 
-      // geting data from server
-      card.getAttribute('bank') === 'add' ? clearPreview() : updatePreview(card.getAttribute('bank'))
+  let result = ``
+  data.map(card => {
+    // вырезаем первые 12 символов
+    let dataCardNumber = `${'#'.repeat(12)}${card.cardNumber.slice(-4)}`
+    // создаем пробелы каждые 4 символа
+    const formattedNumber = [...dataCardNumber]
+      .map((char, index) => (index % 4 === 0 ? ' ' : '') + char).join('').trim()
 
-      card.classList.add('checked')
-    }
+    result += `
+      <li bank="${card.bank}" class="method-card">
+        <img class="bank-img" src="./img/${card.bank}.png" alt="bank preview">
+        <div class="card-format">
+          <p class="format">${formattedNumber}</p>
+          <div>
+            <p class="card-expiration">${card.expiration}</p>
+            <p class="default"></p>
+          </div>
+        </div>
+        <div class="radio"></div>
+      </li>
+    `
   })
-})
+  // подбираем кнопку добавления карт
+  result += `${methodsContainer.innerHTML}`
 
-async function getData(bank) {
-  const response = await fetch(`http://localhost:3000/` + bank)
-  return await response.json()
+  methodsContainer.innerHTML = result
+
+  // adding interaction with credit cards
+  const methodCards = document.querySelectorAll(".method-card")
+  methodCards.forEach(card => {
+    card.addEventListener('click', () => {
+      if (!card.classList.contains('checked')) {
+        methodCards.forEach(item => {
+          item.classList.remove('checked')
+        })
+
+        // getting data from server
+        card.getAttribute('bank') === 'add' ? clearPreview() : updatePreview(card.getAttribute('bank'))
+
+        card.classList.add('checked')
+      }
+    })
+  })
 }
 
 async function updatePreview(bank) {
@@ -66,14 +97,13 @@ async function updatePreview(bank) {
   cardNumber.innerText = data.cardNumber
   cardBankImg.src = `http://127.0.0.1:5500/img/${bank}.png`
 
-  editInputs.forEach(input => {
-    console.dir(data)
-    let currentInput = input.getAttribute('id')
-    if (input.getAttribute(currentInput) === data[currentInput]) {
-      input.value = data[currentInput]
-    }
 
-  })
+  for (const key in data) {
+    const input = document.getElementById(key) // Получаем элемент input по айдишнику (ключу)
+    if (input) {
+      input.value = data[key] // Присваиваем значение из объекта data в input
+    }
+  }
 }
 
 function clearPreview() {
@@ -87,3 +117,26 @@ function clearPreview() {
   })
 }
 
+cancelBtn.addEventListener('click', () => {
+  clearPreview()
+})
+
+changeBtn.addEventListener('click', () => {
+  const newCard = {
+    "bank": "",
+    "holderName": "",
+    "expiration": "",
+    "cardNumber": "",
+    "cvv": ""
+  }
+
+
+  for (const key in newCard) {
+    const input = document.getElementById(key)
+    if (input) {
+      newCard[key] = input.value
+    }
+  }
+
+  addMethod(newCard)
+})
