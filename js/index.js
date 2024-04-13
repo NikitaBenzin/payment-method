@@ -1,8 +1,8 @@
 /* TODO: 
 x 1: check radio inputs (change checked state)
 x 2: change bank image
-  3: validate form
-  4: clear on cancel button
+x 3: validate form
+x 4: clear on cancel button
   5: add on card preview value from inputs
   6: create 'adding payment method'
 
@@ -33,38 +33,51 @@ const cardBankImg = document.querySelector('#card-preview-info > img')
 // кнопка для подтверждения выбранной карты
 const paymentMethodBtn = document.querySelector('#payment-method-btn')
 // кнопка для подтверждения изменения инфо карты
-const changeBtn = document.querySelector('#change-btn')
+const submitChangeBtn = document.querySelector('#change-btn')
 const cancelBtn = document.querySelector('#cancel-btn')
 
 // ----------------------------------------------------------------------
 
 // FUNCTIONS
-loadCards()
+initialize()
+
+function initialize() {
+  loadCards()
+}
 
 async function loadCards() {
   const data = await getAllData()
 
   let result = ``
-  data.map(card => {
+  data.map((card, i) => {
+
     // вырезаем первые 12 символов
     let dataCardNumber = `${'#'.repeat(12)}${card.cardNumber.slice(-4)}`
     // создаем пробелы каждые 4 символа
     const formattedNumber = [...dataCardNumber]
       .map((char, index) => (index % 4 === 0 ? ' ' : '') + char).join('').trim()
 
+    // создаем разделение
+    let formattedExpiration = [...card.expiration]
+    const after = formattedExpiration.slice(2).join('')
+    const before = formattedExpiration.slice(-2).join('')
+    formattedExpiration = `${before} / ${after}`
+
     result += `
-      <li bank="${card.bank}" class="method-card">
+      <li bank="${card.bank}" class="method-card ${i === 0 ? 'checked' : ''}">
         <img class="bank-img" src="./img/${card.bank}.png" alt="bank preview">
         <div class="card-format">
           <p class="format">${formattedNumber}</p>
           <div>
-            <p class="card-expiration">${card.expiration}</p>
-            <p class="default"></p>
+            <p class="card-expiration">${formattedExpiration}</p>
+            <p class="default">${i === 0 ? 'Default' : ''}</p>
           </div>
         </div>
         <div class="radio"></div>
       </li>
     `
+    i === 0 ? updatePreview(card.bank) : ''
+
   })
   // подбираем кнопку добавления карт
   result += `${methodsContainer.innerHTML}`
@@ -92,9 +105,19 @@ async function loadCards() {
 async function updatePreview(bank) {
   const data = await getData(bank)
 
+  // создаем разделение
+  let formattedExpiration = [...data.expiration]
+  const after = formattedExpiration.slice(2).join('')
+  const before = formattedExpiration.slice(-2).join('')
+  formattedExpiration = `${before} / ${after}`
+
+  // создаем пробелы каждые 4 символа
+  const formattedNumber = [...data.cardNumber]
+    .map((char, index) => (index % 4 === 0 ? ' ' : '') + char).join('').trim()
+
   holderName.innerText = data.holderName
-  cardExpiration.innerText = data.expiration
-  cardNumber.innerText = data.cardNumber
+  cardExpiration.innerText = formattedExpiration
+  cardNumber.innerText = formattedNumber
   cardBankImg.src = `http://127.0.0.1:5500/img/${bank}.png`
 
 
@@ -121,22 +144,69 @@ cancelBtn.addEventListener('click', () => {
   clearPreview()
 })
 
-changeBtn.addEventListener('click', () => {
-  const newCard = {
-    "bank": "",
-    "holderName": "",
-    "expiration": "",
-    "cardNumber": "",
-    "cvv": ""
+submitChangeBtn.addEventListener('click', () => {
+  let error = false
+
+  const iHolderName = document.getElementById('holderName')
+  const iExpiration = document.getElementById('expiration')
+  const iCardNumber = document.getElementById('cardNumber')
+  const iCvv = document.getElementById('cvv')
+
+  // Check Name input
+  if (iHolderName.value.length <= 3
+    || iHolderName.value.match(/\d/g)) {
+    iHolderName.classList.add('error')
+    error = true
+  } else {
+    iHolderName.classList.remove('error')
+    error = false
   }
 
+  // Check Expiration input
+  if (iExpiration.value.length <= 3
+    || !iExpiration.value.match(/\d/g)) {
+    iExpiration.classList.add('error')
+    error = true
+  } else {
+    iExpiration.classList.remove('error')
+    error = false
+  }
 
-  for (const key in newCard) {
-    const input = document.getElementById(key)
-    if (input) {
-      newCard[key] = input.value
+  // Check Card Number input
+  if (iCardNumber.value.length <= 15
+    || !iCardNumber.value.match(/\d/g)) {
+    iCardNumber.classList.add('error')
+    error = true
+  } else {
+    iCardNumber.classList.remove('error')
+    error = false
+  }
+
+  // Check Cvv input
+  if (iCvv.value.length <= 2
+    || !iCvv.value.match(/\d/g)) {
+    iCvv.classList.add('error')
+    error = true
+  } else {
+    iCvv.classList.remove('error')
+    error = false
+  }
+
+  if (!error) {
+    const newCard = {
+      "bank": "",
+      "holderName": "",
+      "expiration": "",
+      "cardNumber": "",
+      "cvv": ""
     }
-  }
+    for (const key in newCard) {
+      const input = document.getElementById(key)
+      if (input) {
+        newCard[key] = input.value
+      }
+    }
 
-  addMethod(newCard)
+    addMethod(newCard)
+  }
 })

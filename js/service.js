@@ -1,5 +1,8 @@
+
 // getting data from server
 const URL = 'http://localhost:3000/cards'
+//const axios = require('axios/dist/browser/axios.cjs'); // browser
+//const axios = require('axios/dist/node/axios.cjs'); // node
 
 export async function getData(bank) {
 
@@ -22,11 +25,13 @@ export async function getAllData() {
 
 export async function addMethod(card) {
 
-  await fetch(URL, {
+  await fetch('https://reqres.in/api/cards', {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-type": "application/json"
     },
     body: JSON.stringify(card)
   })
+    .then(response => response.json())
+    .then(data => console.log(data))
 }

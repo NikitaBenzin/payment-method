@@ -163,4 +163,8 @@ body {
   display: flex;
   gap: 1rem;
   width: 100%;
+}
+
+.error {
+  border-color: red !important;
 }/*# sourceMappingURL=index.css.map */

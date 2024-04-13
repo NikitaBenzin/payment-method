@@ -3,7 +3,7 @@
     {
       "bank": "visa",
       "holderName": "Pascal Beloit",   
-      "expiration": "09 / 25",
+      "expiration": "0925",
       "cardNumber": "4234123412348908",
       "cvv": "021"
     },
@@ -11,7 +11,7 @@
     {
       "bank": "mastercard",
       "holderName": "Pascal Beloit",   
-      "expiration": "02 / 26",
+      "expiration": "0226",
       "cardNumber": "5234123412343456",
       "cvv": "601"
     },
@@ -20,7 +20,7 @@
     {
       "bank": "paypal",
       "holderName": "Pascal Beloit",   
-      "expiration": "09 / 05",
+      "expiration": "0905",
       "cardNumber": "5334123412341935",
       "cvv": "001"
     }
